@@ -303,14 +303,14 @@ PennController("demographics",
                // set 'yes' and 'no' keys
                newVar("yes_key")
                .settings.global()
-               .set( "F" ) // for F-version
-               // .set( "J" ) // for J-version
+               // .set( "F" ) // for F-version
+               .set( "J" ) // for J-version
                ,
                // set 'no' key; this is necessary for the conditional in the practice round (for feedback)
                newVar("no_key")
                .settings.global()
-               .set( "J" ) // for F-version
-               // .set( "F" ) // for J-version
+               // .set( "J" ) // for F-version
+               .set( "F" ) // for J-version
               )                                 //end of welcome screen
     
     
@@ -412,8 +412,10 @@ PennController( "instructions1",
                         + "In this experiment, you will be reading sentences about cultural figures."
                         + "<br>You may be very familiar with some cultural figures, and not very familiar with others."
                         + "<p>(1) <b>the name</b> of a cultural figure from around the world will appear. "
-                        + "<p>If you are familiar with the cultural figure, press the <b>F key</b> on your keyboard."
-                        + "<p>If you are <i>not</i> familiar with the cultural figure, press the <b>J key</b>."
+                        //+ "<p>If you are familiar with the cultural figure, press the <b>F key</b> on your keyboard." // F-version
+                        //+ "<p>If you are <i>not</i> familiar with the cultural figure, press the <b>J key</b>." // F-version
+                        + "<p>If you are familiar with the cultural figure, press the <b>J key</b> on your keyboard." // J-version
+                        + "<p>If you are <i>not</i> familiar with the cultural figure, press the <b>F key</b>." // J-version
                        )
                 .settings.css("font-size", "20px")
                 ,
@@ -519,8 +521,8 @@ PennController( "instructions1",
                 ,
                 newText("instructions_c", "<p>(3) After this sentence, you will decide whether it naturally described "
                         + " the person whose name you saw, based on what you know of them."
-                        + " the <b>'F' key</b> for <i>'yes, it fits'</i>, or the <b>'J' key</b> for <i>'no, it doesn't'</i>." // F-version
-                        // + "the 'F' key for 'no, it doesn't', or the 'J' key for 'yes, it fits'." // J-version
+                        // + " Press the <b>'F' key</b> for <i>'yes, it fits'</i>, or the <b>'J' key</b> for <i>'no, it doesn't'</i>." // F-version
+                        + " Press the <b>'J' key</b> for <i>'yes, it fits'</i>, or the <b>'F' key</b> for <i>'no, it doesn't'</i>." // J-version
                         + " However, during the experiment the sentences will disappear before you can make a selection, so consider this when you reach the end of the sentences."
                         + "<p>Once you've made your decision, you will continue to the next cultural figure."
                         + "<br> You only have a few seconds to make this selection, otherwise it will time out."
@@ -589,7 +591,8 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                           .remove()
                                           ,
                                           // context sentence
-                                          newText ("name_instru","<i>Read the name and indicate if you are familiar with the person by pressing <b>F (yes) or J (no)</b>.")
+                                          // newText ("name_instru","<i>Read the name and indicate if you are familiar with the person by pressing <b>F (yes) or J (no)</b>.")// F-version
+                                          newText ("name_instru","<i>Read the name and indicate if you are familiar with the person by pressing <b>F (no) or J (yes)</b>.") // J-version
                                           .settings.css("font-size", "15px")
                                           .settings.center()
                                           .settings.css("font-family","times new roman")
@@ -605,10 +608,12 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                           .settings.css("font-family","courier")
                                           .print("20vw","40vh")
                                           ,
-                                          getImage("checkmark")
+                                          //getImage("checkmark") // F-version
+                                          getImage("crossmark") // J-version
                                           .print("30vw","50vh")
                                           ,
-                                          getImage("crossmark")
+                                          //getImage("crossmark") // F-version
+                                          getImage("checkmark") // J-version
                                           .print("70vw","50vh")
                                           ,
                                           newTimer("name", 500)
@@ -645,8 +650,8 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                       .remove()
                                       ,
                                       // present judgement task instructions
-                                      newText ("rating_instru", "<i>Did the sentence fit naturally with the name?<p>The 'F' key = 'yes', the 'J' key = 'no'.</i>") // F-version
-                                      // newText ("rating_instru", "<i>Did the last sentence fit with the preceding sentences?<p>The 'J' key = 'yes', the 'F' key = 'no'.</i>") // J-version
+                                      // newText ("rating_instru", "<i>Did the sentence fit naturally with the name?<p>The 'F' key = 'yes', the 'J' key = 'no'.</i>") // F-version
+                                      newText ("rating_instru", "<i>Did the last sentence fit with the preceding sentences?<p>The 'F' key = 'no', the 'J' key = 'yes'.</i>") // J-version
                                       .settings.center()
                                       .settings.css("font-size", "15px")
                                       .settings.css("font-family","times new roman")
@@ -654,10 +659,12 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                       .print("center at 50%","30vh")
                                       // judgement task
                                       ,
-                                      getImage("checkmark")
+                                      //getImage("checkmark") // F-version
+                                      getImage("crossmark") // J-version
                                       .print("30vw","50vh")
                                       ,
-                                      getImage("crossmark")
+                                      //getImage("crossmark") // F-version
+                                      getImage("checkmark") // J-version
                                       .print("70vw","50vh")
                                       ,
                                       newKey("rating", "FJ")
@@ -703,7 +710,7 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                       .log("lifetime" , variable.lifetime)
                                       .log("tense", variable.tense)
                                       .log("mm", variable.mm)
-                                                                            .log("rating", getVar("rating"))
+                                      .log("rating", getVar("rating"))
                                       .log("item" , variable.item_id)
                                       .log("name" , variable.name)  
                                       .log("list", variable.list)
@@ -812,12 +819,6 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                           .settings.css("font-family","courier")
                                           .print("20vw","40vh")
                                           ,
-                                          getImage("checkmark")
-                                          .print("30vw","50vh")
-                                          ,
-                                          getImage("crossmark")
-                                          .print("70vw","50vh")
-                                          ,
                                           newTimer("name", 500)
                                           .start()
                                           .wait()
@@ -828,45 +829,15 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                           getText("name")
                                           .remove()
                                           ,
-                                          getImage("checkmark")
-                                          .remove()
-                                          ,
-                                          getImage("crossmark")
-                                          .remove()
-                                          ,
                                           //critical sentence
                                           ...cumulative_crit(variable.critical_short, "remove")    
                                       ,  
-                                      
-                                      /*newText("F_text", "F")
-                                      .settings.css("font-size", "20px")
-                                      .print("40vw","40vh")
-                                      //.settings.color("green")
-                                      ,
-                                      newText("yes_text", "<i>(yes)")
-                                      .settings.css("font-size", "20px")
-                                      .print("38vw","45vh") // F-version
-                                      //.print("58vw","45vh") // J-version
-                                      .settings.color("green")
-                                      ,
-                                      newText("J_text", "J")
-                                      .settings.css("font-size", "20px")
-                                      .settings.center()
-                                      .print("60vw","40vh")
-                                      //.settings.color("red")
-                                      ,
-                                      newText("no_text", "<i>(no)")
-                                      .settings.css("font-size", "20px")
-                                      .settings.center()
-                                      .print("58vw","45vh") // F-version
-                                      //.print("38vw","45vh") // J-version
-                                      .settings.color("red")
-                                      ,*/
-                                      
-                                      getImage("checkmark")
+                                      //getImage("checkmark") // F-version
+                                      getImage("crossmark") // J-version
                                       .print("30vw","50vh")
                                       ,
-                                      getImage("crossmark")
+                                      //getImage("crossmark") // F-version
+                                      getImage("checkmark") // J-version
                                       .print("70vw","50vh")
                                       ,
                                       newKey("rating", "FJ")
@@ -900,7 +871,7 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                       .log("lifetime" , variable.lifetime)
                                       .log("tense", variable.tense)
                                       .log("mm", variable.mm)
-                                                                            .log("rating", getVar("rating"))
+                                      .log("rating", getVar("rating"))
                                       .log("item" , variable.item_id)
                                       .log("name" , variable.name)  
                                       .log("list", variable.list)
@@ -960,30 +931,14 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                           //critical sentence
                                           ...cumulative_crit(variable.critical_short, "remove")    
                                       ,  
-                                      newText("F_text", "F")
-                                      .settings.css("font-size", "20px")
-                                      .print("40vw","40vh")
-                                      //.settings.color("green")
+                                      //getImage("checkmark") // F-version
+                                      getImage("crossmark") // J-version
+                                      .print("30vw","50vh")
                                       ,
-                                      newText("yes_text", "<i>(yes)")
-                                      .settings.css("font-size", "20px")
-                                      .print("38vw","45vh") // F-version
-                                      //.print("58vw","45vh") // J-version
-                                      .settings.color("green")
+                                      //getImage("crossmark") // F-version
+                                      getImage("checkmark") // J-version
+                                      .print("70vw","50vh")
                                       ,
-                                      newText("J_text", "J")
-                                      .settings.css("font-size", "20px")
-                                      .settings.center()
-                                      .print("60vw","40vh")
-                                      //.settings.color("red")
-                                      ,
-                                      newText("no_text", "<i>(no)")
-                                      .settings.css("font-size", "20px")
-                                      .settings.center()
-                                      .print("58vw","45vh") // F-version
-                                      //.print("38vw","45vh") // J-version
-                                      .settings.color("red")
-                                      ,     
                                       newKey("rating", "FJ")
                                       .callback( getTimer("time_out1").stop() )
                                       .log("all")  
@@ -993,10 +948,10 @@ PennController.Template( PennController.GetTable( "master_spr_subset20_world_fak
                                       .log()
                                       .wait()
                                       ,     
-                                      getText("F_text")
+                                      getImage("checkmark")
                                       .remove()
                                       ,   
-                                      getText("J_text")
+                                      getImage("crossmark")
                                       .remove()
                                       ,                                  
                                       getKey("rating")
@@ -1058,10 +1013,7 @@ PennController( "break" ,
                 .settings.center()
                 .print()
                 ,
-                //F-Version:
                 newKey("end_break", " ")
-                //J-Version:
-                //newKey("continue_Ja", "J")
                 .wait()
                 ,  
                 getText("instructions_key2")
@@ -1258,11 +1210,9 @@ PennController( "post-task-intro",
                 .settings.css("font-size", "20px")
                 ,        
                 newText("comp1_2", "You will be presented with some prompts to which you respond using the F and J keys:"
-                        + " <p>1. You will see a <b> name</b> from the experiment. Again, you press F or J to indicate if you're familiar with the person"
-                        + " <p>2. Next, you will see the words 'alive' and 'dead'. Press F or J to select the one that describes the person's current status"
-                        + " <p>3. Next, you will see two nationalities. Again, press F or J to select the one that describes the person."
-                        +  "<p>4. Lastly, you'll be presented two occupations. Select whichever you believe the person is best known for."
-                        + "<p><p> For names that you said you don't recognise, you guess for these prompts."
+                        + " <p>You will first see a <b> name</b> from the experiment. Again, you press F or J to indicate if you're familiar with the person"
+                        + " <p>Next, you will see the words 'alive' and 'dead'. Press F or J to select the one that describes the person's current status"
+                        + "<p><p> For names that you said you don't recognise, you can guess."
                         +  "<p><p>Press the spacebar to continue to a short practice round.")
                 .settings.css("font-size", "20px")
                 ,
@@ -1302,14 +1252,6 @@ PennController. Template( PennController.GetTable( "master_spr_subset20_world_fa
                                            ,
                                            newText("post_name",  variable.name)
                                            ,
-                                           /*newText("occupation_correct", variable.occupation)
-                                           ,
-                                           newText("occupation_incorrect", variable.occupation_distractor)
-                                           ,
-                                           newText("nationality_correct",  variable.nationality)
-                                           ,
-                                           newText("nationality_incorrect",  variable.nationality_distractor)
-                                           ,*/
                                            newText("lifetime_correct", variable.lifetime)
                                            ,
                                            newText("lifetime_incorrect", variable.lifetime_distractor)
@@ -1321,12 +1263,15 @@ PennController. Template( PennController.GetTable( "master_spr_subset20_world_fa
                                            // NAME
                                            newCanvas("name", "100vw" , "100vh")
                                            .add("center at 50%", "center at 20%", getText("post_name"))
-                                           .add("center at 25%", "center at 20%", getImage("checkmark") )
-                                           .add("center at 75%", "center at 20%", getImage("crossmark") )
+                                           //.add("center at 25%", "center at 20%", getImage("checkmark") ) // F-version
+                                           //.add("center at 75%", "center at 20%", getImage("crossmark") ) // F-version
+                                           .add("center at 25%", "center at 20%", getImage("crossmark") ) // J-version
+                                           .add("center at 75%", "center at 20%", getImage("checkmark") ) // J-version
                                            .print()
                                            ,
                                            newSelector("post_name")
-                                           .add(getImage("checkmark"), getImage("crossmark"))
+                                           //.add(getImage("checkmark"), getImage("crossmark")) // F-version
+                                           .add(getImage("crossmark"), getImage("checkmark")) // J-version
                                            .keys("F", "J")
                                            .wait()
                                            ,
@@ -1346,34 +1291,6 @@ PennController. Template( PennController.GetTable( "master_spr_subset20_world_fa
                                            ,
                                            getCanvas("lifetime").remove()
                                            ,
-                                           /* NATIONALITY
-                                           newCanvas("nationality", "100vw" , "100vh")
-                                           .add( "center at 30%", "center at 20%", getText("nationality_correct"))
-                                           .add( "center at 70%", "center at 20%", getText("nationality_incorrect"))
-                                           .print()
-                                           ,
-                                           newSelector("post_nationality")
-                                           .add(getText("nationality_correct"), getText("nationality_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           ,
-                                           getCanvas("nationality").remove()
-                                           ,
-                                           // OCCUPATIION
-                                           newCanvas("occupation", "100vw" , "100vh")
-                                           .add(  "center at 30%", "center at 20%", getText("occupation_correct"))
-                                           .add("center at 70%", "center at 20%", getText("occupation_incorrect"))
-                                           .print()
-                                           ,
-                                           newSelector("post_occupation")
-                                           .add(getText("occupation_correct"), getText("occupation_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           ,
-                                           getCanvas("occupation").remove()
-                                           ,*/
                                            // WAIT
                                            newCanvas("dots", "100vw" , "100vh")
                                            .add("center at 50%", "center at 20%", newText("pleasewait_post2", "...").bold())
@@ -1444,14 +1361,6 @@ PennController. Template( PennController.GetTable( "master_spr_subset20_world_fa
                                            ,
                                            newText("post_name",  variable.name)
                                            ,
-                                           /*newText("occupation_correct", variable.occupation)
-                                           ,
-                                           newText("occupation_incorrect", variable.occupation_distractor)
-                                           ,
-                                           newText("nationality_correct",  variable.nationality)
-                                           ,
-                                           newText("nationality_incorrect",  variable.nationality_distractor)
-                                           ,*/
                                            newText("lifetime_correct", variable.lifetime)
                                            ,
                                            newText("lifetime_incorrect", variable.lifetime_distractor)
@@ -1465,12 +1374,15 @@ PennController. Template( PennController.GetTable( "master_spr_subset20_world_fa
                                            .add("center at 50%", "center at 12%", newText("Are you familiar with this person?")
                                                 .settings.css("font-size", "20px") .settings.color("red") )
                                            .add("center at 50%", "center at 20%", getText("post_name"))
-                                           .add("center at 25%", "center at 20%", getImage("checkmark") )
-                                           .add("center at 75%", "center at 20%", getImage("crossmark") )
+                                           //.add("center at 25%", "center at 20%", getImage("checkmark") ) // F-version
+                                           //.add("center at 75%", "center at 20%", getImage("crossmark") ) // F-version
+                                           .add("center at 25%", "center at 20%", getImage("crossmark") ) // J-version
+                                           .add("center at 75%", "center at 20%", getImage("checkmark") ) // J-version
                                            .print()
                                            ,
                                            newSelector("post_name")
-                                           .add(getImage("checkmark"), getImage("crossmark"))
+                                           //.add(getImage("checkmark"), getImage("crossmark")) // F-version
+                                           .add(getImage("crossmark"), getImage("checkmark")) // J-version
                                            .keys("F", "J")
                                            .wait()
                                            ,
@@ -1491,39 +1403,7 @@ PennController. Template( PennController.GetTable( "master_spr_subset20_world_fa
                                            .wait()
                                            ,
                                            getCanvas("lifetime").remove()
-                                           , /*
-                                           // NATIONALITY
-                                           newCanvas("nationality", "100vw" , "100vh")
-                                           .add("center at 50%", "center at 12%", newText("Their nationality is/was...")
-                                                .settings.css("font-size", "20px") .settings.color("red") )
-                                           .add( "center at 30%", "center at 20%", getText("nationality_correct"))
-                                           .add( "center at 70%", "center at 20%", getText("nationality_incorrect"))
-                                           .print()
                                            ,
-                                           newSelector("post_nationality")
-                                           .add(getText("nationality_correct"), getText("nationality_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           ,
-                                           getCanvas("nationality").remove()
-                                           ,
-                                           // OCCUPATIION
-                                           newCanvas("occupation", "100vw" , "100vh")
-                                           .add("center at 50%", "center at 12%", newText("They are most known for being a(n)...")
-                                                .settings.css("font-size", "20px") .settings.color("red") )
-                                           .add(  "center at 30%", "center at 20%", getText("occupation_correct"))
-                                           .add("center at 70%", "center at 20%", getText("occupation_incorrect"))
-                                           .print()
-                                           ,
-                                           newSelector("post_occupation")
-                                           .add(getText("occupation_correct"), getText("occupation_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           ,
-                                           getCanvas("occupation").remove()
-                                           ,*/
                                            // WAIT
                                            newCanvas("dots", "100vw" , "100vh")
                                            .add("center at 50%", "center at 20%", newText("pleasewait_post2", "...").bold())
